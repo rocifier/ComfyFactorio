@@ -18,11 +18,11 @@ local function waves_on_tick()
     if game.tick % 40 == 0 then
         if wave_info.current_wave_spawning then
             local unit_type = global.wave_definitions[wave_info.current_wave_number][wave_info.current_spawn_index]
-            local spawn_areas = game.surfaces.nauvis.get_script_areas('spawn_area')
+            local spawn_areas = game.surfaces.nauvis.get_script_areas('wave_spawn')
             if (#spawn_areas ~= 1) then
                 game.print('Failed to find single spawn area')
             end
-            local position = game.surfaces.nauvis.find_non_colliding_position(unit_type, spawn_area.area, 0.5)
+            local position = game.surfaces.nauvis.find_non_colliding_position_in_box(unit_type, spawn_areas[1].area, 0.5)
             local unit = game.surfaces.nauvis.create_entity{name=unit_type, position = position, force=wave_info.wave_force, }
 
             wave_info.current_spawn_index = wave_info.current_spawn_index + 1
